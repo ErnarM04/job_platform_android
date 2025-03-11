@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.startups.HomeFragment"
+        android:name="com.example.startups.fragments.HomeFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_home" >
         <action
@@ -16,16 +16,13 @@
     </fragment>
     <fragment
         android:id="@+id/favouritesFragment"
-        android:name="com.example.startups.FavouritesFragment"
+        android:name="com.example.startups.fragments.FavouritesFragment"
         android:label="fragment_favourites"
         tools:layout="@layout/fragment_favourites" >
-        <action
-            android:id="@+id/action_favouritesFragment_to_requestsFragment"
-            app:destination="@id/requestsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.startups.ProfileFragment"
+        android:name="com.example.startups.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -34,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.startups.ChatFragment"
+        android:name="com.example.startups.fragments.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" >
         <action
