@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/editButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -69,12 +69,17 @@
             app:layout_constraintStart_toEndOf="@+id/avatar"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
+            <EditText
                 android:id="@+id/fullName"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:text="Full Name"
+                android:enabled="false"
+                android:padding="0dp"
+                android:hint="Full Name"
+                android:textColorHint="@color/black"
+                android:background="@null"
                 android:textAlignment="textStart"
+                android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -94,11 +99,15 @@
             app:layout_constraintStart_toEndOf="@+id/avatar"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
-            <TextView
+            <EditText
                 android:id="@+id/job"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:text="Job"
+                android:hint="Job"
+                android:enabled="false"
+                android:textColorHint="@color/black"
+                android:textSize="14dp"
+                android:background="@null"
                 android:textAlignment="textStart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -119,12 +128,16 @@
             app:layout_constraintStart_toEndOf="@+id/avatar"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout10">
 
-            <TextView
+            <EditText
                 android:id="@+id/birthday"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:inputType="date"
-                android:text="Birthday"
+                android:background="@null"
+                android:enabled="false"
+                android:hint="Birthday"
+                android:textColorHint="@color/black"
+                android:textSize="14dp"
                 android:textAlignment="textStart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -145,11 +158,16 @@
             app:layout_constraintStart_toEndOf="@+id/avatar"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
 
-            <TextView
+            <EditText
                 android:id="@+id/phoneNumber"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:text="Phone Number"
+                android:hint="Phone Number"
+                android:textSize="14dp"
+                android:inputType="phone"
+                android:enabled="false"
+                android:textColorHint="@color/black"
+                android:background="@null"
                 android:textAlignment="textStart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -170,11 +188,15 @@
             app:layout_constraintStart_toEndOf="@+id/avatar"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
 
-            <TextView
+            <EditText
                 android:id="@+id/email"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:text="Email"
+                android:hint="Email"
+                android:enabled="false"
+                android:textSize="14dp"
+                android:background="@null"
+                android:textColorHint="@color/black"
                 android:textAlignment="textStart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
