@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="5dp"
     android:background="@drawable/border">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -19,11 +21,13 @@
     <TextView
         android:id="@+id/jobTitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="24dp"
+        android:padding="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="Job Title"
         android:textSize="22dp"
+        android:maxWidth="128dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/circleImageView"
         app:layout_constraintTop_toTopOf="parent" />
@@ -73,7 +77,8 @@
     <TextView
         android:id="@+id/description"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
+        android:maxHeight="48dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
@@ -87,7 +92,7 @@
         android:id="@+id/sendRequest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
         android:text="Send Request"
