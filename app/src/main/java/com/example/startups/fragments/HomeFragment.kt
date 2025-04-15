@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.startups.R
-import com.example.startups.VacanvyAdapter
+import com.example.startups.adapters.VacanvyAdapter
 import com.example.startups.databinding.FragmentHomeBinding
 import com.example.startups.models.Job
 

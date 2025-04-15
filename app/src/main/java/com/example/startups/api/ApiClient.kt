@@ -31,7 +31,7 @@ object ApiClient {
         fun getToken(@Body requestBody: RequestBody): Call<TokenResponse>
 
         @Headers("Content-Type: application/json")
-        @POST("users/register/jobseeker/")
+        @POST("api/users/register/jobseeker/")
         fun register(@Body requestBody: RequestBody): Call<User>
 
         @Headers("Content-Type: application/json")
@@ -39,14 +39,14 @@ object ApiClient {
         fun refresh(@Body requestBody: RequestBody): Call<Access>
 
         @Headers("Content-Type: application/json")
-        @GET("users/jobseeker/profile/")
+        @GET("api/users/jobseeker/profile/")
         fun getProfile(@Header("Authorization") access: String ): Call<Profile>
 
         @Headers("Content-Type: application/json")
-        @PATCH("users/jobseeker/profile/")
+        @PATCH("api/users/jobseeker/profile/")
         fun editProfile(@Header("Authorization") access: String, @Body requestBody: RequestBody): Call<Profile>
 
-        @GET("users/resumes/")
+        @GET("api/users/resumes/")
         fun getResume(@Header("Authorization") access: String): Call<List<Resume>>
     }
 }

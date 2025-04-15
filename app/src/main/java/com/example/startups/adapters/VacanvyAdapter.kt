@@ -1,10 +1,12 @@
-package com.example.startups
+package com.example.startups.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
+import com.example.startups.activities.JobInfoActivity
 import com.example.startups.databinding.JobElementBinding
 import com.example.startups.models.Job
 
@@ -32,7 +34,6 @@ class VacanvyAdapter(): Adapter<VacanvyAdapter.ViewHolder>() {
     }
 
     class ViewHolder(private val binding: JobElementBinding): RecyclerView.ViewHolder(binding.root) {
-        private val context = binding.root.context
 
         fun bind(job: Job){
             with(binding){
@@ -57,5 +58,15 @@ class VacanvyAdapter(): Adapter<VacanvyAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(jobs[position])
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, JobInfoActivity::class.java)
+            val job = jobs[position]
+            intent.putExtra("title", job.jobTitle)
+            intent.putExtra("company", job.companyName)
+            intent.putExtra("description", job.description)
+            intent.putExtra("salary", job.salary)
+            holder.itemView.context.startActivity(intent)
+            println(jobs[position].jobTitle)
+        }
     }
 }
