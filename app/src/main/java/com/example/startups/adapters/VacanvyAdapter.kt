@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
+import com.example.startups.R
 import com.example.startups.activities.JobInfoActivity
 import com.example.startups.databinding.JobElementBinding
 import com.example.startups.models.Job
@@ -19,6 +20,7 @@ class VacanvyAdapter(): Adapter<VacanvyAdapter.ViewHolder>() {
         val diffResult = DiffUtil.calculateDiff(DiffCallback(jobs, booksList))
         jobs.clear()
         jobs.addAll(booksList)
+        println("Jobs:"+jobs)
         diffResult.dispatchUpdatesTo(this)
     }
 
@@ -37,10 +39,11 @@ class VacanvyAdapter(): Adapter<VacanvyAdapter.ViewHolder>() {
 
         fun bind(job: Job){
             with(binding){
+
                 binding.jobTitle.text = job.jobTitle
-                binding.companyName.text = job.companyName
+//                binding.companyName.text = job.companyName
                 binding.description.text = job.description
-                binding.salary.text = job.salary.toString()+"$"
+                binding.salary.text = job.salaryFrom.toString()+"-"+job.salaryTo.toString()
             }
         }
     }
@@ -62,9 +65,9 @@ class VacanvyAdapter(): Adapter<VacanvyAdapter.ViewHolder>() {
             val intent = Intent(holder.itemView.context, JobInfoActivity::class.java)
             val job = jobs[position]
             intent.putExtra("title", job.jobTitle)
-            intent.putExtra("company", job.companyName)
+//            intent.putExtra("company", job.companyName)
             intent.putExtra("description", job.description)
-            intent.putExtra("salary", job.salary)
+            intent.putExtra("salary", job.salaryFrom.toString() + "-" + job.salaryTo.toString())
             holder.itemView.context.startActivity(intent)
             println(jobs[position].jobTitle)
         }

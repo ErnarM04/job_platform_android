@@ -18,5 +18,6 @@ class JobInfoActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.textView7).text = intent.getStringExtra("description")
         findViewById<TextView>(R.id.textView8).text = intent.getStringExtra("company")
 
+
     }
 }

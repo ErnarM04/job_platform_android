@@ -85,6 +85,14 @@ class ProfileFragment : Fragment() {
         })
 
         val changePassword = view.findViewById<Button>(R.id.changePasswordEnter)
+        val logout = view.findViewById<Button>(R.id.logoutButton)
+        logout.setOnClickListener {
+            val intent = activity?.intent
+            intent?.putExtra("isSignedIn", false)
+            intent?.putExtra("access", "")
+            intent?.putExtra("refresh", "")
+            activity?.finish()
+        }
         val editButton = view.findViewById<Button>(R.id.editButton)
         editButton.setOnClickListener {
             val username = view.findViewById<EditText>(R.id.fullName)

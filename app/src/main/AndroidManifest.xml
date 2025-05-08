@@ -27,7 +27,8 @@
             android:exported="false" />
         <activity
             android:name=".activities.JobInfoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:resizeableActivity="true"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

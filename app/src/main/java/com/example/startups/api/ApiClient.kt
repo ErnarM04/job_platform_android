@@ -1,6 +1,7 @@
 package com.example.startups.api
 
 import com.example.startups.models.Access
+import com.example.startups.models.Job
 import com.example.startups.models.Profile
 import com.example.startups.models.Resume
 import com.example.startups.models.User
@@ -48,5 +49,8 @@ object ApiClient {
 
         @GET("api/users/resumes/")
         fun getResume(@Header("Authorization") access: String): Call<List<Resume>>
+
+        @GET("api/companies/vacancies/")
+        fun getVacancies(@Header("Authorization") access: String): Call<List<Job>>
     }
 }
