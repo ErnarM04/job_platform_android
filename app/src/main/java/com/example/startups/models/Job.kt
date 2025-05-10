@@ -3,6 +3,7 @@ package com.example.startups.models
 import com.google.gson.annotations.SerializedName
 
 data class Job(
+    val id: Int,
     @SerializedName("title") var jobTitle: String,
     @SerializedName("company") val companyId: Int,
     @SerializedName("salary_from") var salaryFrom: Int,

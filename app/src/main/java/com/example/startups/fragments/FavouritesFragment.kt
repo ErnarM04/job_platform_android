@@ -20,9 +20,7 @@ import retrofit2.Response
 
 class FavouritesFragment : Fragment() {
 
-    private val adapter by lazy {
-        VacanvyAdapter()
-    }
+    private val adapter by lazy { VacanvyAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +62,7 @@ class FavouritesFragment : Fragment() {
             }
 
         })
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recommendRecycler)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.favoritesRecycler)
 
         val request = instance.getVacancies("Bearer "+ access)
         request.enqueue(object : Callback<List<Job>> {
@@ -75,11 +73,6 @@ class FavouritesFragment : Fragment() {
                     if(it.isFavorite){
                         favoriteList.add(it)
                     }
-                }
-                favoriteList.let {
-                    adapter.setJobs(
-                        booksList = it.map { it }
-                    )
                 }
             }
 

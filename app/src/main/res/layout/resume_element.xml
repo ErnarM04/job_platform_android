@@ -1,6 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@drawable/filter_button">
 
+    <EditText
+        android:id="@+id/field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        android:editable="false"
+        android:ems="10"
+        android:hint="Main Info"
+        android:inputType="text"
+        android:maxWidth="280sp"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@null"
+        android:ems="10"
+        android:enabled="false"
+        android:fontFamily="sans-serif-light"
+        android:hint="Period"
+        android:inputType="datetime|date"
+        android:maxWidth="280sp"
+        android:textColorHint="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/info" />
+
+    <ImageButton
+        android:id="@+id/remove"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/filter_button"
+        android:padding="8sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/remove" />
+
+    <ImageButton
+        android:id="@+id/edit"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/filter_button"
+        android:padding="8sp"
+        app:layout_constraintBottom_toBottomOf="@+id/remove"
+        app:layout_constraintEnd_toStartOf="@+id/remove"
+        app:layout_constraintTop_toTopOf="@+id/remove"
+        app:srcCompat="@drawable/edit" />
+
+    <EditText
+        android:id="@+id/info"
+        android:layout_width="280sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@null"
+        android:ems="10"
+        android:maxWidth="280sp"
+        android:enabled="false"
+        android:hint="Description"
+        android:inputType="text"
+        android:textColorHint="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/field" />
 </androidx.constraintlayout.widget.ConstraintLayout>

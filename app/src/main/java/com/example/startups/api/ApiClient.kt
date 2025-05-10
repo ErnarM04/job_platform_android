@@ -1,8 +1,11 @@
 package com.example.startups.api
 
 import com.example.startups.models.Access
+import com.example.startups.models.Application
+import com.example.startups.models.Company
 import com.example.startups.models.Job
 import com.example.startups.models.Profile
+import com.example.startups.models.Response
 import com.example.startups.models.Resume
 import com.example.startups.models.User
 import okhttp3.RequestBody
@@ -16,6 +19,7 @@ import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 object ApiClient {
@@ -47,10 +51,19 @@ object ApiClient {
         @PATCH("api/users/jobseeker/profile/")
         fun editProfile(@Header("Authorization") access: String, @Body requestBody: RequestBody): Call<Profile>
 
-        @GET("api/users/resumes/")
-        fun getResume(@Header("Authorization") access: String): Call<List<Resume>>
+        @GET("api/resumes/")
+        fun getResumes(@Header("Authorization") access: String): Call<List<Resume>>
 
         @GET("api/companies/vacancies/")
         fun getVacancies(@Header("Authorization") access: String): Call<List<Job>>
+
+        @POST("api/companies/applications/")
+        fun sendApplication(@Header("Authorization") access: String, @Body requestBody: RequestBody): Call<Application>
+
+        @GET("api/companies/companies/{id}/")
+        fun getCompanyInfo(@Path("id") companyId: Int): Call<Company>
+
+        @POST("api/users/change_password/")
+        fun changePassword(@Header("Authorization") access: String, @Body requestBody: RequestBody): Call<Response>
     }
 }

@@ -1,9 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.StartUps" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#58c3bd</item>
+        <item name="colorOnBackground">@color/white</item>
     </style>
 
     <style name="Theme.StartUps" parent="Base.Theme.StartUps" />
+
+
 </resources>

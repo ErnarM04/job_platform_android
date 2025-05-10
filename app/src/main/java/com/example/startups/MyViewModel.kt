@@ -18,12 +18,6 @@ class MyViewModel : ViewModel() {
     private val _refresh = MutableLiveData<String>()
     val refresh: LiveData<String> get() = _refresh
 
-    private val _username = MutableLiveData<String>()
-    val username: LiveData<String> get() = _username
-
-    private val _password = MutableLiveData<String>()
-    val password: LiveData<String> get() = _password
-
     // Function to update signed-in status
     fun setSignedIn(isSignedIn: Boolean) {
         _signedIn.value = isSignedIn
@@ -39,8 +33,4 @@ class MyViewModel : ViewModel() {
         _refresh.value = token
     }
 
-    fun setUser(username: String, password: String) {
-        _username.value = username
-        _password.value = password
-    }
 }

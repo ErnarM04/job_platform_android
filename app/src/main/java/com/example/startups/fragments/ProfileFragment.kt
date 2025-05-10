@@ -11,25 +11,41 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.startups.MyViewModel
 import com.example.startups.activities.ChangePasswordActivity
 import com.example.startups.R
+import com.example.startups.adapters.ResumeAdapter
+import com.example.startups.api.APIRequests
 import com.example.startups.api.ApiClient
 import com.example.startups.models.Access
 import com.example.startups.models.Profile
+import com.example.startups.models.Resume
 import com.google.android.gms.common.api.Api
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.internal.wait
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), APIRequests {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val educationAdapter by lazy { ResumeAdapter() }
+    private val experienceAdapter by lazy { ResumeAdapter() }
 
-    }
+    private lateinit var fullNameEdit: EditText
+    private lateinit var emailEdit: EditText
+    private lateinit var phoneEdit: EditText
+    private lateinit var birthdayEdit: EditText
+    private lateinit var jobEdit: EditText
+    private lateinit var editButton: Button
+    private lateinit var changePasswordButton: Button
+    private lateinit var logoutButton: Button
+
+    private var accessToken: String = ""
+    private var refreshToken: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,115 +53,110 @@ class ProfileFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        val viewModel = ViewModelProvider(requireActivity()).get(MyViewModel::class.java)
+        // Токендерді алу
+        accessToken = activity?.intent?.getStringExtra("access").orEmpty()
+        refreshToken = activity?.intent?.getStringExtra("refresh").orEmpty()
 
-        var access: String = ""
-        var refresh: String = ""
+        // UI элементтерін байланыстыру
+        fullNameEdit = view.findViewById(R.id.fullName)
+        emailEdit = view.findViewById(R.id.email)
+        phoneEdit = view.findViewById(R.id.phoneNumber)
+        birthdayEdit = view.findViewById(R.id.birthday)
+        jobEdit = view.findViewById(R.id.job)
+        editButton = view.findViewById(R.id.editButton)
+        changePasswordButton = view.findViewById(R.id.changePasswordEnter)
+        logoutButton = view.findViewById(R.id.logoutButton)
 
-        viewModel.access.observe(viewLifecycleOwner, Observer { accessToken -> access = accessToken })
-        viewModel.refresh.observe(viewLifecycleOwner, Observer { refreshToken -> refresh = refreshToken })
+        // RecyclerView орнату
+        val educationRecycler = view.findViewById<RecyclerView>(R.id.educationRecycler)
+        val experienceRecycler = view.findViewById<RecyclerView>(R.id.experienceRecycler)
 
-        access = activity?.intent?.getStringExtra("access").toString()
+        educationRecycler.adapter = educationAdapter
+        experienceRecycler.adapter = experienceAdapter
+        educationRecycler.layoutManager = LinearLayoutManager(context)
+        experienceRecycler.layoutManager = LinearLayoutManager(context)
 
+        // Деректерді жүктеу
+        loadProfile()
+        loadResume()
+
+        setupButtons()
+
+        return view
+    }
+
+    private fun loadProfile() {
+        ApiClient.instance.getProfile("Bearer $accessToken")
+            .enqueue(object : Callback<Profile> {
+                override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
+                    response.body()?.user?.let { user ->
+                        fullNameEdit.setText(user.fullName)
+                        emailEdit.setText(user.email)
+                        phoneEdit.setText(user.phoneNumber)
+                    }
+                }
+
+                override fun onFailure(call: Call<Profile>, t: Throwable) {
+                    println("Profile load error: ${t.message}")
+                }
+            })
+    }
+
+    private fun loadResume() {
         val instance = ApiClient.instance
-        val request = instance.getProfile("Bearer "+access)
-        println("Bearer "+access)
-        request.enqueue(object : Callback<Profile>{
-            override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
-                val user = response.body()?.user
-                println(user)
-                val name = view.findViewById<TextView>(R.id.fullName)
-                val email = view.findViewById<TextView>(R.id.email)
-                val phone = view.findViewById<TextView>(R.id.phoneNumber)
-                name.text = user?.fullName
-                email.text = user?.email
-                phone.text = user?.phoneNumber
+        val request = instance.getResumes("Bearer $accessToken")
+        request.enqueue(object : Callback<List<Resume>> {
+                override fun onResponse(call: Call<List<Resume>>, response: Response<List<Resume>>) {
+                    response.body()?.get(0)?.let { resume ->
+                        jobEdit.setText(resume.title)
+                        educationAdapter.setItems(resume.education)
+                        experienceAdapter.setItems(resume.experience) }
+                }
+
+                override fun onFailure(call: Call<List<Resume>>, t: Throwable) {
+                    println("Resume load error: ${t.message}")
+                }
+            })
+    }
+
+    private fun setupButtons() {
+        editButton.setOnClickListener {
+            val isEditing = editButton.text == "Edit"
+            setEditingEnabled(isEditing)
+
+            if (!isEditing) {
+                // Save data
+                editProfile(
+                    fullNameEdit.text.toString(),
+                    phoneEdit.text.toString(),
+                    emailEdit.text.toString(),
+                    accessToken
+                )
             }
 
-            override fun onFailure(call: Call<Profile>, t: Throwable) {
-                println(t.message)
-            }
+            editButton.text = if (isEditing) "Save" else "Edit"
+        }
 
-        })
+        changePasswordButton.setOnClickListener {
+            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
+            intent.putExtra("access", accessToken)
+            startActivity(intent)
+        }
 
-        val json_token = """{"refresh":"${refresh}"}""".trimIndent()
-        val body = json_token.toRequestBody("application/json".toMediaType())
-
-        val refreshRequest = instance.refresh(body)
-        refreshRequest.enqueue(object : Callback<Access>{
-            override fun onResponse(call: Call<Access>, response: Response<Access>) {
-                response.body()?.access?.let { activity?.intent?.putExtra("access", it) }
-                println(response.raw())
-            }
-
-            override fun onFailure(call: Call<Access>, t: Throwable) {
-                println(t.message)
-            }
-
-        })
-
-        val changePassword = view.findViewById<Button>(R.id.changePasswordEnter)
-        val logout = view.findViewById<Button>(R.id.logoutButton)
-        logout.setOnClickListener {
+        logoutButton.setOnClickListener {
             val intent = activity?.intent
             intent?.putExtra("isSignedIn", false)
             intent?.putExtra("access", "")
             intent?.putExtra("refresh", "")
             activity?.finish()
         }
-        val editButton = view.findViewById<Button>(R.id.editButton)
-        editButton.setOnClickListener {
-            val username = view.findViewById<EditText>(R.id.fullName)
-            val email = view.findViewById<EditText>(R.id.email)
-            val phone = view.findViewById<EditText>(R.id.phoneNumber)
-            val birthday = view.findViewById<EditText>(R.id.birthday)
-            val job = view.findViewById<EditText>(R.id.job)
-            when (editButton.text){
-                "Edit" -> {
-                    username.isEnabled = true
-                    email.isEnabled = true
-                    phone.isEnabled = true
-                    birthday.isEnabled = true
-                    job.isEnabled = true
-
-                    editButton.text = "Save"
-                }
-                "Save" -> {
-                    username.isEnabled = false
-                    email.isEnabled = false
-                    phone.isEnabled = false
-                    birthday.isEnabled = false
-                    job.isEnabled = false
-                    val json_token = """{
-                        "user": {
-                            "username": "${username.text}",
-                            "phone": "${phone.text}",
-                            "email": "${email.text}"
-                            }
-                        }""".trimIndent()
-                    val body = json_token.toRequestBody("application/json".toMediaType())
-                    val instance = ApiClient.instance
-                    val request = instance.editProfile("Bearer "+access, body)
-                    request.enqueue(object : Callback<Profile>{
-                        override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
-                            println("Profile edited.")
-                            println(response.raw())
-                        }
-
-                        override fun onFailure(call: Call<Profile>, t: Throwable) {
-                            println(t.message)
-                        }
-
-                    })
-                    editButton.text = "Edit"
-                }
-            }
-        }
-        changePassword.setOnClickListener {
-            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
-            startActivity(intent)
-        }
-        return view
     }
 
+    private fun setEditingEnabled(enabled: Boolean) {
+        fullNameEdit.isEnabled = enabled
+        emailEdit.isEnabled = enabled
+        phoneEdit.isEnabled = enabled
+        birthdayEdit.isEnabled = enabled
+        jobEdit.isEnabled = enabled
+    }
 }

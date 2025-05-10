@@ -56,9 +56,6 @@ class MainActivity : AppCompatActivity() {
         if (refresh != null) {
             viewModel.setRefreshToken(refresh)
         }
-        if (username != null && password != null) {
-            viewModel.setUser(username, password)
-        }
 
         val bottomNavigationBar = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val navController = findNavController(R.id.fragmentContainerView)
@@ -82,5 +79,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
         super.onResume()
+    }
+
+    override fun onBackPressed() {
+        val navController = findNavController(R.id.fragmentContainerView)
+        if (navController.currentDestination?.id != R.id.homeFragment) {
+            navController.popBackStack(R.id.homeFragment, false)
+        } else {
+            super.onBackPressed()
+        }
     }
 }

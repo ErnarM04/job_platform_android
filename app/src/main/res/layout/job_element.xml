@@ -47,20 +47,10 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/more"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bookmark_border" />
-
-    <ImageView
-        android:id="@+id/more"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/more_vert" />
+        app:srcCompat="@drawable/bookmark_border" />
 
     <TextView
         android:id="@+id/salary"

@@ -27,8 +27,7 @@ class ChatFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
 
-        val chatList: ArrayList<Chat> = arrayListOf(Chat("AI Assistant", null, null, null),
-            Chat("Yernar", "00:00", "Example", null))
+        val chatList: ArrayList<Chat> = arrayListOf(Chat("AI Assistant", null, null, null))
         val recyclerView = view.findViewById<RecyclerView>(R.id.chatRecycler)
         adapter.addChat(chatList)
         recyclerView.adapter = adapter
